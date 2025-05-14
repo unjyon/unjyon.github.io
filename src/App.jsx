@@ -1,17 +1,25 @@
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navigation from "./components/Layout/Navigation";
+import Home from "./pages/Home";
+import Experience from "./pages/Experience";
+import Contact from "./pages/Contact";
+import "./styles/variables.css";
 import "./App.css";
 
 function App() {
-  const [message, setMessage] = useState("hello world");
-
-  const handleClick = () => {
-    setMessage("Hello from React!");
-  };
-
   return (
-    <div className="greeting" onClick={handleClick}>
-      {message}
-    </div>
+    <Router>
+      <div className="app">
+        <Navigation />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/experience" element={<Experience />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 

@@ -1,0 +1,37 @@
+.experience-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-large);
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: var(--spacing-large);
+  color: var(--text-color);
+}
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}
+
+@media (max-width: 768px) {
+  .experience-page {
+    padding: var(--spacing-medium);
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .experience-item {
+    flex-direction: column;
+    gap: var(--spacing-medium);
+  }
+
+  .experience-number {
+    margin-bottom: var(--spacing-small);
+  }
+}
