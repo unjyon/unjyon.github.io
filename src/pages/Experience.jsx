@@ -1,12 +1,16 @@
 import { experiences } from "../data/experience";
 import ExperienceItem from "../components/UI/ExperienceItem";
-import "./Experience.css";
+import {
+  ExperiencePage,
+  PageTitle,
+  ExperienceList,
+} from "../styles/pages/Experience.styles";
 
 const Experience = () => {
   return (
-    <div className="experience-page">
-      <h2 className="page-title">Experience</h2>
-      <div className="experience-list">
+    <ExperiencePage>
+      <PageTitle>Experience</PageTitle>
+      <ExperienceList>
         {experiences.map((exp) => (
           <ExperienceItem
             key={exp.id}
@@ -16,8 +20,8 @@ const Experience = () => {
             period={exp.period}
           />
         ))}
-      </div>
-    </div>
+      </ExperienceList>
+    </ExperiencePage>
   );
 };
 

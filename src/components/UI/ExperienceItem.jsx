@@ -1,15 +1,22 @@
-import "./ExperienceItem.css";
+import {
+  ExperienceItemContainer,
+  ExperienceNumber,
+  ExperienceContent,
+  ExperienceRole,
+  ExperienceCompany,
+  ExperiencePeriod,
+} from "../../styles/components/UI/ExperienceItem.styles";
 
 const ExperienceItem = ({ id, role, company, period }) => {
   return (
-    <div className="experience-item">
-      <div className="experience-number">{String(id).padStart(2, "0")}</div>
-      <div className="experience-content">
-        <h3 className="experience-role">{role}</h3>
-        <p className="experience-company">{company}</p>
-        <p className="experience-period">{period}</p>
-      </div>
-    </div>
+    <ExperienceItemContainer>
+      <ExperienceNumber>{String(id).padStart(2, "0")}</ExperienceNumber>
+      <ExperienceContent>
+        <ExperienceRole>{role}</ExperienceRole>
+        <ExperienceCompany>{company}</ExperienceCompany>
+        <ExperiencePeriod>{period}</ExperiencePeriod>
+      </ExperienceContent>
+    </ExperienceItemContainer>
   );
 };
 

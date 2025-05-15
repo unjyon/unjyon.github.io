@@ -1,5 +1,20 @@
 import { useState } from "react";
-import "./Contact.css";
+import {
+  ContactPage,
+  PageTitle,
+  ContactContent,
+  ContactInfo,
+  ContactInfoTitle,
+  ContactInfoText,
+  SocialLinks,
+  SocialLink,
+  ContactForm,
+  FormGroup,
+  Label,
+  Input,
+  Textarea,
+  SubmitButton,
+} from "../styles/pages/Contact.styles";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -18,9 +33,7 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 여기에 폼 제출 로직 추가
     console.log("Form submitted:", formData);
-    // 폼 초기화
     setFormData({
       name: "",
       email: "",
@@ -29,26 +42,28 @@ const Contact = () => {
   };
 
   return (
-    <div className="contact-page">
-      <h2 className="page-title">Contact</h2>
-      <div className="contact-content">
-        <div className="contact-info">
-          <h3>Let's Connect!</h3>
-          <p>프로젝트 문의나 협업 제안을 기다립니다.</p>
-          <div className="social-links">
-            <a
+    <ContactPage>
+      <PageTitle>Contact</PageTitle>
+      <ContactContent>
+        <ContactInfo>
+          <ContactInfoTitle>Let's Connect!</ContactInfoTitle>
+          <ContactInfoText>
+            프로젝트 문의나 협업 제안을 기다립니다.
+          </ContactInfoText>
+          <SocialLinks>
+            <SocialLink
               href="https://github.com/unjyon"
               target="_blank"
               rel="noopener noreferrer"
             >
               GitHub
-            </a>
-          </div>
-        </div>
-        <form className="contact-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input
+            </SocialLink>
+          </SocialLinks>
+        </ContactInfo>
+        <ContactForm onSubmit={handleSubmit}>
+          <FormGroup>
+            <Label htmlFor="name">Name</Label>
+            <Input
               type="text"
               id="name"
               name="name"
@@ -56,10 +71,10 @@ const Contact = () => {
               onChange={handleChange}
               required
             />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="email">Email</Label>
+            <Input
               type="email"
               id="email"
               name="email"
@@ -67,24 +82,22 @@ const Contact = () => {
               onChange={handleChange}
               required
             />
-          </div>
-          <div className="form-group">
-            <label htmlFor="message">Message</label>
-            <textarea
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="message">Message</Label>
+            <Textarea
               id="message"
               name="message"
               value={formData.message}
               onChange={handleChange}
-              required
               rows="5"
+              required
             />
-          </div>
-          <button type="submit" className="submit-button">
-            Send Message
-          </button>
-        </form>
-      </div>
-    </div>
+          </FormGroup>
+          <SubmitButton type="submit">Send Message</SubmitButton>
+        </ContactForm>
+      </ContactContent>
+    </ContactPage>
   );
 };
 
