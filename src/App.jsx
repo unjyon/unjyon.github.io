@@ -5,8 +5,6 @@ import Home from "./pages/Home";
 import Experience from "./pages/Experience";
 import Contact from "./pages/Contact";
 import { GlobalStyle } from "./styles/GlobalStyle";
-import "./styles/variables.css";
-import "./App.css";
 
 const AppContainer = styled.div`
   min-height: 100vh;
