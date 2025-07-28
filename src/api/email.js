@@ -5,7 +5,7 @@ const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
 export const sendEmail = async (formData) => {
   try {
     const { data, error } = await resend.emails.send({
-      from: "your-website@yourdomain.com", // 발신자 이메일 (Resend에서 설정한 도메인)
+      from: `${formData.email}`, // 발신자 이메일 (Resend에서 설정한 도메인)
       to: ["unjyon.song@gmail.com"], // 수신자 이메일 (본인 이메일)
       subject: `새로운 문의: ${formData.name}님으로부터`,
       html: `
