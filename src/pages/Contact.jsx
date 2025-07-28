@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { sendEmail } from "../api/email";
 import {
   ContactPage,
   PageTitle,
@@ -22,24 +23,79 @@ const Contact = () => {
     email: "",
     message: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChangeName = useCallback((e) => {
+    const { value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      name: value,
     }));
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-    setFormData({
-      name: "",
-      email: "",
-      message: "",
-    });
-  };
+  const handleChangeEmail = useCallback((e) => {
+    const { value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      email: value,
+    }));
+  }, []);
+
+  const handleChangeMessage = useCallback((e) => {
+    const { value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      message: value,
+    }));
+  }, []);
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      console.log("Form submitted:", formData);
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+    },
+    [formData]
+  );
+
+  const validateCheck = useCallback(() => {
+    const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formData.name || !formData.email || !formData.message) {
+      alert("모든 필드를 입력해주세요.");
+      return false;
+    } else if (!checkEmail.test(formData.email)) {
+      alert("이메일 형식이 올바르지 않습니다.");
+      return false;
+    }
+    return true;
+  }, [formData]);
+
+  const submitEmail = useCallback(async () => {
+    console.log("submitEmail submitted:", formData);
+    if (validateCheck()) {
+      setIsLoading(true);
+      try {
+        console.log("sendEmail::", formData);
+        await sendEmail(formData);
+        alert("이메일이 성공적으로 전송되었습니다!");
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } catch (error) {
+        console.error("이메일 전송 실패:", error);
+        alert("이메일 전송에 실패했습니다. 다시 시도해주세요.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [formData, validateCheck]);
 
   return (
     <ContactPage>
@@ -68,8 +124,9 @@ const Contact = () => {
               id="name"
               name="name"
               value={formData.name}
-              onChange={handleChange}
+              onChange={handleChangeName}
               required
+              maxLength={10}
             />
           </FormGroup>
           <FormGroup>
@@ -79,7 +136,8 @@ const Contact = () => {
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleChange}
+              onChange={handleChangeEmail}
+              maxLength={30}
               required
             />
           </FormGroup>
@@ -89,12 +147,18 @@ const Contact = () => {
               id="message"
               name="message"
               value={formData.message}
-              onChange={handleChange}
+              onChange={handleChangeMessage}
               rows="5"
               required
             />
           </FormGroup>
-          <SubmitButton type="submit">Send Message</SubmitButton>
+          <SubmitButton
+            type="submit"
+            onClick={submitEmail}
+            disabled={isLoading}
+          >
+            {isLoading ? "전송 중..." : "Send Message"}
+          </SubmitButton>
         </ContactForm>
       </ContactContent>
     </ContactPage>
