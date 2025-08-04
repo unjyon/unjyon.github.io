@@ -1,5 +1,5 @@
 import Skills from "../sections/Skills";
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useEffect } from "react";
 import {
   HomeContainer,
   HeroSection,
@@ -9,27 +9,63 @@ import {
 import MainSvgItem from "../components/UI/MainSvgItem";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+import { TextPlugin } from "gsap/TextPlugin";
 
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, TextPlugin);
 
 const Home = () => {
-  const itemRef = useRef(null);
   const containerRef = useRef(null);
   const svgRef = useRef(null);
 
-  useLayoutEffect(() => {
-    // GSAP animation for the main item
-    const itemAnimation = gsap.to(itemRef.current, {
-      x: 100,
-      duration: 1,
-    });
+  // useGsap(() => {
+  //   // GSAP animation for the main item
+  //   const itemAnimation = gsap.to(itemRef.current, {
+  //     x: 100,
+  //     duration: 1,
+  //   });
 
-    // Add inner_img SVG path animation using ref
+  //   // Add inner_img SVG path animation using ref
+  //   if (svgRef.current) {
+  //     const innerImgPaths = svgRef.current.querySelectorAll("svg path");
+  //     innerImgPaths.map((path) => {
+  //       // Calculate the actual path length
+  //       const length = path.getTotalLength();
+
+  //       // Set initial styles
+  //       gsap.set(path, {
+  //         strokeDasharray: length,
+  //         strokeDashoffset: length,
+  //         opacity: 0,
+  //       });
+
+  //       // Create the animation
+  //       return gsap.to(path, {
+  //         opacity: 1,
+  //         strokeDashoffset: 0,
+  //         duration: 1.5,
+  //         ease: "power1.inOut",
+  //         scrollTrigger: {
+  //           trigger: ".intro",
+  //           start: "top 80%",
+  //           end: "bottom 20%",
+  //           toggleActions: "play none none reverse",
+  //         },
+  //       });
+  //     });
+  //   }
+  // });
+  const contentTimeLine = useRef();
+
+  useEffect(() => {
+    contentTimeLine.current = gsap.timeline();
+
+    // Add inner_img SVG path animation
     if (svgRef.current) {
       const innerImgPaths = svgRef.current.querySelectorAll("svg path");
 
-      const pathAnimations = innerImgPaths.map((path) => {
+      innerImgPaths.forEach((path) => {
         // Calculate the actual path length
         const length = path.getTotalLength();
 
@@ -41,7 +77,7 @@ const Home = () => {
         });
 
         // Create the animation
-        return gsap.to(path, {
+        gsap.to(path, {
           opacity: 1,
           strokeDashoffset: 0,
           duration: 1.5,
@@ -54,15 +90,62 @@ const Home = () => {
           },
         });
       });
-
-      // Cleanup function
-      return () => {
-        itemAnimation.kill();
-        pathAnimations.forEach((animation) => animation.kill());
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      };
     }
+
+    // Cleanup function
+    return () => {
+      if (contentTimeLine.current) {
+        contentTimeLine.current.kill();
+      }
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, []);
+
+  // useLayoutEffect(() => {
+  //   // GSAP animation for the main item
+  //   const itemAnimation = gsap.to(itemRef.current, {
+  //     x: 100,
+  //     duration: 1,
+  //   });
+
+  //   // Add inner_img SVG path animation using ref
+  //   if (svgRef.current) {
+  //     const innerImgPaths = svgRef.current.querySelectorAll("svg path");
+
+  //     const pathAnimations = innerImgPaths.map((path) => {
+  //       // Calculate the actual path length
+  //       const length = path.getTotalLength();
+
+  //       // Set initial styles
+  //       gsap.set(path, {
+  //         strokeDasharray: length,
+  //         strokeDashoffset: length,
+  //         opacity: 0,
+  //       });
+
+  //       // Create the animation
+  //       return gsap.to(path, {
+  //         opacity: 1,
+  //         strokeDashoffset: 0,
+  //         duration: 1.5,
+  //         ease: "power1.inOut",
+  //         scrollTrigger: {
+  //           trigger: ".intro",
+  //           start: "top 80%",
+  //           end: "bottom 20%",
+  //           toggleActions: "play none none reverse",
+  //         },
+  //       });
+  //     });
+
+  //     // Cleanup function
+  //     return () => {
+  //       itemAnimation.kill();
+  //       pathAnimations.forEach((animation) => animation.kill());
+  //       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  //     };
+  //   }
+  // }, []);
 
   return (
     <HomeContainer ref={containerRef}>

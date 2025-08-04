@@ -1,9 +1,25 @@
 import { Resend } from "resend";
 
-const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+// Check if API key is available
+const apiKey = import.meta.env.VITE_RESEND_API_KEY;
+
+if (!apiKey) {
+  console.warn(
+    "Resend API key is not configured. Please set VITE_RESEND_API_KEY in your .env file"
+  );
+}
+
+const resend = apiKey ? new Resend(apiKey) : null;
 
 export const sendEmail = async (formData) => {
   try {
+    // Check if Resend is properly configured
+    if (!resend) {
+      throw new Error(
+        "Resend API key is not configured. Please set VITE_RESEND_API_KEY in your .env file"
+      );
+    }
+
     const { data, error } = await resend.emails.send({
       from: `${formData.email}`, // 발신자 이메일 (Resend에서 설정한 도메인)
       to: ["unjyon.song@gmail.com"], // 수신자 이메일 (본인 이메일)

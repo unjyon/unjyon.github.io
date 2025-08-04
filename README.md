@@ -1,26 +1,41 @@
-# React + Vite
+# Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+프론트엔드 개발자 송은정의 포트폴리오 웹사이트입니다.
 
-Currently, two official plugins are available:
+## 설치 및 실행
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install
+npm run dev
+```
 
-## Email Functionality with Resend
+## 환경 변수 설정
 
-This project includes email functionality using Resend. To set up email sending:
+### Resend API 키 설정 (이메일 기능)
 
-1. Sign up for a Resend account at [resend.com](https://resend.com)
-2. Get your API key from the Resend dashboard
-3. Create a `.env` file in the root directory with:
-   ```
-   VITE_RESEND_API_KEY=your_resend_api_key_here
-   ```
-4. Update the email configuration in `src/api/email.js`:
-   - Change `from` email to your verified domain
-   - Change `to` email to your email address
+1. [Resend](https://resend.com)에서 계정을 만들고 API 키를 발급받으세요.
+2. 프로젝트 루트에 `.env` 파일을 생성하세요:
 
-## Expanding the ESLint configuration
+```env
+VITE_RESEND_API_KEY=re_your_actual_api_key_here
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. API 키를 발급받은 후 `.env` 파일에 실제 API 키를 입력하세요.
+
+**주의**: `.env` 파일은 `.gitignore`에 포함되어 있어 Git에 커밋되지 않습니다.
+
+## 기술 스택
+
+- React
+- Vite
+- GSAP (애니메이션)
+- Resend (이메일 서비스)
+- Styled Components
+
+## 주요 기능
+
+- 반응형 디자인
+- GSAP 애니메이션
+- 이메일 문의 기능
+- 프로젝트 포트폴리오
+- 기술 스택 소개
