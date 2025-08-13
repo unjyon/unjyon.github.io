@@ -6,6 +6,7 @@ const Nav = styled.nav`
   padding: 1rem 2rem;
   width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
 
   @media (max-width: 768px) {
     padding: 1rem;

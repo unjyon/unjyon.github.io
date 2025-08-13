@@ -1,8 +1,9 @@
 import { forwardRef } from "react";
+import { SvgWrapper } from "./MainSvgItem.styles";
 
 const MainSvgItem = forwardRef((props, ref) => {
   return (
-    <div ref={ref} className="inner_img">
+    <SvgWrapper ref={ref} className="inner_img">
       <svg
         viewBox="0 0 884 1131"
         fill="none"
@@ -339,7 +340,7 @@ const MainSvgItem = forwardRef((props, ref) => {
           fill="black"
         />
       </svg>
-    </div>
+    </SvgWrapper>
   );
 });
 
